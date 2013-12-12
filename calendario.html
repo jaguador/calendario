@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>grid-layout demo</title>
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css">
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+  <style>
+ /* ADD 6(e) and 7(f) column grid */
+.ui-grid-e, .ui-grid-f { overflow: hidden; }
+
+/* grid e: 16/16/16/16/16/16 */
+.ui-grid-e .ui-block-a, .ui-grid-e .ui-block-b, .ui-grid-e .ui-block-c, .ui-grid-e .ui-block-d, .ui-grid-e .ui-block-e, .ui-grid-e .ui-block-f { width: 16.59166666666667%; }
+.ui-grid-e > :nth-child(n) { width: 16.66666666666667%; }
+.ui-grid-e .ui-block-a { clear: left; }
+
+/* grid f: 14/14/14/14/14 */
+.ui-grid-f .ui-block-a, .ui-grid-f .ui-block-b, .ui-grid-f .ui-block-c, .ui-grid-f .ui-block-d, .ui-grid-f .ui-block-e, .ui-grid-f .ui-block-f, .ui-grid-f .ui-block-g { width: 14.21071428571429%; }
+.ui-grid-f > :nth-child(n) { width: 14.28571428571429%; }
+.ui-grid-f .ui-block-a { clear: left; }
+
+/* ADD 6th (f) and 7th (g) blocks in grid */
+.ui-header .ui-navbar .ui-grid-e li.ui-block-f .ui-btn,
+.ui-footer .ui-navbar .ui-grid-e li.ui-block-f .ui-btn { margin-right: -3px; }/* NOT TESTED */
+
+.ui-header .ui-navbar .ui-grid-f li.ui-block-g .ui-btn,
+.ui-footer .ui-navbar .ui-grid-f li.ui-block-g .ui-btn { margin-right: -2px; }/* NOT TESTED */
+
+.ui-grid-e .ui-btn, .ui-grid-f .ui-btn { margin-right: 5px; margin-left: 5px; }
+
+.ui-block-f, .ui-block-g { margin: 0; padding: 0; border: 0; float: left; min-height: 1px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box; }
+
+.ui-header .ui-navbar .ui-grid-e li.ui-block-f .ui-btn-icon-right .ui-icon,
+.ui-footer .ui-navbar .ui-grid-f li.ui-block-g .ui-btn-icon-right .ui-icon { right: 8px; }
+div .borde{ border: 1px solid black; text-align: center}
+div .diasemana{ border: 1px solid black; text-align: center; background-color: lightgray;}
+div .otromes{ border: 1px solid black; text-align: center; color: lightgray;}
+div .diames{font-weight:bold;  border: 1px solid black; text-align: center; }
+  </style>
+</head>
+<body>
+ 
+<script>
+var anio = 2013;
+var mes = 10;
+var patron = {}; 
+patron.nombre = "Atestados"; 
+patron.diainicio = new Date();
+patron.referencia = new Array("T", "M/N", " ", " ", " ");  
+  
+var mod = function (n, m) {
+    var remain = n % m;
+    return Math.floor(remain >= 0 ? remain : remain + m);
+};  
+  
+Math.floor((date2 - date1) / (1000*60*60*24))  
+  
+function cambiaMes(incremento) {
+	mes += incremento;
+	if (mes == 13) {
+		anio++;
+		mes = 1;
+	}
+	if (mes == 0) {
+		anio--;
+		mes = 1;
+	}
+	var f1 = new Date(anio, mes-1, 1);
+	// Posicionarnos en el primer dia
+	var diasemana = f1.getDay();
+	diasemana = mod(diasemana-1, 7);
+	var faux = f1;
+	var indice;
+	faux.setDate(faux.getDate()-diasemana);
+	for (var i=1; i<=diasemana; i++) {		
+		$("#dia_"+i).html("<div class='otromes'>"+faux.getDate()+"</div>");
+		faux.setDate(faux.getDate()+1);
+		indice = i;
+	}
+	for (var i=indice+1; i<=35; i++) {
+		$("#dia_"+i).html("<div class='diames'>"+f1.getDate()+"</div>");
+		f1.setDate(f1.getDate()+1);
+	}
+	
+}
+
+$(document).ready(function() {
+      var hoy = new Date();
+	  anio = hoy.getFullYear();
+	  mes = hoy.getMonth()+1;
+	  cambiaMes(0);
+});
+
+$( function(){
+  $( "#btnAnterior" ).on( "vclick", function(){
+	cambiaMes(1);
+  //$( this ).append( '<span style="color:#108040;"> vclick fired...</span>' );
+  });
+}); 
+</script>  
+ 
+<div data-role="page" id="page1">
+        <div data-theme="a" data-role="header">
+            <h3>
+                Header
+            </h3>
+            <a data-role="button" href="#page1" data-icon="bars" data-iconpos="left">
+                |
+            </a>
+        </div>
+    <div data-theme="a" data-role="header">
+        <a data-role="button" href="#page1" class="ui-btn-right" id="btnAnterior">
+            &gt;
+        </a>
+        <a data-role="button" href="#page1" class="ui-btn-left">
+            &lt;
+        </a>
+        <h3>
+            Mes
+        </h3>
+    </div>
+<div class="ui-grid-f">
+  <div class="ui-block-a"><div class="diasemana">L</div></div>
+  <div class="ui-block-b"><div class="diasemana">M</div></div>
+  <div class="ui-block-c"><div class="diasemana">X</div></div>
+  <div class="ui-block-d"><div class="diasemana">J</div></div>
+  <div class="ui-block-e"><div class="diasemana">V</div></div>
+  <div class="ui-block-f"><div class="diasemana">S</div></div>
+  <div class="ui-block-g"><div class="diasemana">D</div></div>
+</div>
+<div class="ui-grid-f">
+  <div class="ui-block-a" id="dia_1"></div>
+  <div class="ui-block-b" id="dia_2"></div>
+  <div class="ui-block-c" id="dia_3"></div>
+  <div class="ui-block-d" id="dia_4"></div>
+  <div class="ui-block-e" id="dia_5"></div>
+  <div class="ui-block-f" id="dia_6"></div>
+  <div class="ui-block-g" id="dia_7"></div>
+</div>
+<div class="ui-grid-f">
+  <div class="ui-block-a" id="dia_8"></div>
+  <div class="ui-block-b" id="dia_9"></div>
+  <div class="ui-block-c" id="dia_10"></div>
+  <div class="ui-block-d" id="dia_11"></div>
+  <div class="ui-block-e" id="dia_12"></div>
+  <div class="ui-block-f" id="dia_13"></div>
+  <div class="ui-block-g" id="dia_14"></div>
+</div>
+<div class="ui-grid-f">
+  <div class="ui-block-a" id="dia_15"></div>
+  <div class="ui-block-b" id="dia_16"></div>
+  <div class="ui-block-c" id="dia_17"></div>
+  <div class="ui-block-d" id="dia_18"></div>
+  <div class="ui-block-e" id="dia_19"></div>
+  <div class="ui-block-f" id="dia_20"></div>
+  <div class="ui-block-g" id="dia_21"></div>
+</div>
+<div class="ui-grid-f">
+  <div class="ui-block-a" id="dia_22"></div>
+  <div class="ui-block-b" id="dia_23"></div>
+  <div class="ui-block-c" id="dia_24"></div>
+  <div class="ui-block-d" id="dia_25"></div>
+  <div class="ui-block-e" id="dia_26"></div>
+  <div class="ui-block-f" id="dia_27"></div>
+  <div class="ui-block-g" id="dia_28"></div>
+</div>
+<div class="ui-grid-f">
+  <div class="ui-block-a" id="dia_29"></div>
+  <div class="ui-block-b" id="dia_30"></div>
+  <div class="ui-block-c" id="dia_31"></div>
+  <div class="ui-block-d" id="dia_32"></div>
+  <div class="ui-block-e" id="dia_33"></div>
+  <div class="ui-block-f" id="dia_34"></div>
+  <div class="ui-block-g" id="dia_35"></div>
+</div>
+<div class="ui-grid-f">
+  <div class="ui-block-a" id="dia_36"></div>
+  <div class="ui-block-b" id="dia_37"></div>
+  <div class="ui-block-c" id="dia_38"></div>
+  <div class="ui-block-d" id="dia_39"></div>
+  <div class="ui-block-e" id="dia_40"></div>
+  <div class="ui-block-f" id="dia_41"></div>
+  <div class="ui-block-g" id="dia_42"></div>
+</div>
+  </div>
+    </div>
+ 
+ 
+</div>
+ 
+</body>
+</html>
