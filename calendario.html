@@ -43,6 +43,7 @@ div .diames{font-weight:bold;  border: 1px solid black; text-align: center; }
 <body>
  
 <script>
+var mesesESP = new Array('ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE');
 var anio = 2013;
 var mes = 10;
 var patron = {}; 
@@ -55,8 +56,10 @@ var mod = function (n, m) {
     return Math.floor(remain >= 0 ? remain : remain + m);
 };  
   
-Math.floor((date2 - date1) / (1000*60*60*24))  
-  
+function diffDias(date1, date2) {  
+	return Math.floor((date2 - date1) / (1000*60*60*24))  
+}
+
 function cambiaMes(incremento) {
 	mes += incremento;
 	if (mes == 13) {
@@ -68,22 +71,25 @@ function cambiaMes(incremento) {
 		mes = 1;
 	}
 	var f1 = new Date(anio, mes-1, 1);
-	// Posicionarnos en el primer dia
 	var diasemana = f1.getDay();
 	diasemana = mod(diasemana-1, 7);
 	var faux = f1;
 	var indice;
 	faux.setDate(faux.getDate()-diasemana);
+	// Posicionarnos en el primer dia del mes
 	for (var i=1; i<=diasemana; i++) {		
-		$("#dia_"+i).html("<div class='otromes'>"+faux.getDate()+"</div>");
+		$("#dia_"+i).html("<div class='otromes'>"+faux.getDate()+"<br/>&nbsp;</div>");
 		faux.setDate(faux.getDate()+1);
 		indice = i;
 	}
+	var i_array = mod(diffDias(f1, patron.diainicio), patron.referencia.length);
 	for (var i=indice+1; i<=35; i++) {
-		$("#dia_"+i).html("<div class='diames'>"+f1.getDate()+"</div>");
+		$("#dia_"+i).html("<div class='diames'>"+f1.getDate()+"<br/>&nbsp;"+patron.referencia[i_array]+"</div>");
 		f1.setDate(f1.getDate()+1);
+		i_array = mod(i_array+1, patron.referencia.length);
 	}
-	
+	// Label de mes y año
+	$('#lblMesAnio').html(mesesESP[f1.getMonth()]+' '+f1.getFullYear());
 }
 
 $(document).ready(function() {
@@ -117,7 +123,7 @@ $( function(){
         <a data-role="button" href="#page1" class="ui-btn-left">
             &lt;
         </a>
-        <h3>
+        <h3 id='lblMesAnio'>
             Mes
         </h3>
     </div>
