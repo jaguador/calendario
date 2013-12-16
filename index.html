@@ -1,15 +1,18 @@
 <!doctype html>
-<html lang="en">
+<html lang="es" manifest="cache.manifest">
+<!-- <html>  -->
 <head>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>grid-layout demo</title>
-  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css">
-  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-  <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+  <title>Calendario de turnos</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="apple-touch-icon" href="images/icon-calendario.png" />
+	<link rel="stylesheet" href="jquery.mobile-1.3.2.min.css">
+	<script src="jquery-1.9.1.min.js"></script>
+	<script src="jquery.mobile-1.3.2.min.js"></script>
   <style>
  /* ADD 6(e) and 7(f) column grid */
 .ui-grid-e, .ui-grid-f { overflow: hidden; }
@@ -37,22 +40,38 @@
 
 .ui-header .ui-navbar .ui-grid-e li.ui-block-f .ui-btn-icon-right .ui-icon,
 .ui-footer .ui-navbar .ui-grid-f li.ui-block-g .ui-btn-icon-right .ui-icon { right: 8px; }
+
+
 div .borde{ border: 1px solid black; text-align: center}
-div .diasemana{ border: 1px solid black; text-align: center; background-color: lightgray;}
-div .otromes{ border: 1px solid black; text-align: center; color: lightgray;}
+div .diasemana{ font-weight:bold; border: 1px solid black; text-align: center; background-color: lightSteelBlue;}
+div .otromes{ font-weight:bold; border: 1px solid black; text-align: center; color: lightgray;}
+div .otromesfs{ font-weight:bold; border: 1px solid black; text-align: center; color: lightgray; }
 div .diames{font-weight:bold;  border: 1px solid black; text-align: center; }
+div .diamesfs{font-weight:bold;  border: 1px solid black; text-align: center; background-color: lightgray;}
+div .diamesturno{font-weight:bold;  border: 1px solid black; text-align: center; color: tomato;}
+div .diamesfsturno{font-weight:bold;  border: 1px solid black; text-align: center; background-color: lightgray; color: tomato;}
   </style>
 </head>
 <body>
  
 <script>
-var mesesESP = new Array('ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE');
+var mesesESP = new Array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
 var anio = 2013;
 var mes = 11;
 var patron = {}; 
 patron.nombre = "Atestados"; 
-patron.diainicio = new Date();
+patron.diainicio = new Date(2013, 11, 14);
 patron.referencia = new Array("T", "M/N", " ", " ", " ");  
+
+/*
+localStorage.calendarios = JSON.stringify(patron);  
+// LOCAL STORAGE 
+if (localStorage.calendarios) {
+    var modeloPersistente = JSON.parse(localStorage.calendarios);
+    // ...
+}  
+*/  
+  
   
 var mod = function (n, m) {
     var remain = n % m;
@@ -80,17 +99,27 @@ function cambiaMes(incremento) {
 	var indice;
 	faux.setDate(faux.getDate()-diasemana);
 	// Posicionarnos en el primer dia del mes
+	var i_array = mod(diffDias(patron.diainicio, faux), patron.referencia.length);
 	for (var i=1; i<=diasemana; i++) {		
-		$("#dia_"+i).html("<div class='otromes'>"+faux.getDate()+"<br/>&nbsp;</div>");
+		if (faux.getDay() == 6 || faux.getDay() == 0)
+			$("#dia_"+i).html("<div class='otromesfs'>"+faux.getDate()+"<br/>&nbsp;"+patron.referencia[i_array]+"</div>");
+		else
+			$("#dia_"+i).html("<div class='otromes'>"+faux.getDate()+"<br/>&nbsp;"+patron.referencia[i_array]+"</div>");
 		faux.setDate(faux.getDate()+1);
 		indice = i;
+		i_array = mod(i_array+1, patron.referencia.length);
 	}
-	var i_array = mod(diffDias(f1, patron.diainicio), patron.referencia.length);
 	// Label de mes y año
+	i_array = mod(diffDias(patron.diainicio, f1), patron.referencia.length);
 	$('#lblMesAnio').html(mesesESP[f1.getMonth()]+' '+f1.getFullYear());
 	var mesaux = mes;
 	for (var i=indice+1; i<=42; i++) {
-		$("#dia_"+i).html("<div class='diames'>"+f1.getDate()+"<br/>&nbsp;"+patron.referencia[i_array]+"</div>");
+		var turnotxt = "diames";
+		if (f1.getDay() == 6 || f1.getDay() == 0)
+			turnotxt += "fs";
+		if (patron.referencia[i_array] != " ")
+			turnotxt += "turno";
+		$("#dia_"+i).html("<div class='"+turnotxt+"'>"+f1.getDate()+"<br/>&nbsp;"+patron.referencia[i_array]+"</div>");
 		f1.setDate(f1.getDate()+1);
 		i_array = mod(i_array+1, patron.referencia.length);
 		if (f1.getMonth() != mesaux) {
@@ -99,8 +128,12 @@ function cambiaMes(incremento) {
 		}
 	}
 	for (var i=indice+1; i<=42; i++) {
-		$("#dia_"+i).html("<div class='otromes'>"+f1.getDate()+"<br/>&nbsp;</div>");
+		if (f1.getDay() == 6 || f1.getDay() == 0)
+			$("#dia_"+i).html("<div class='otromesfs'>"+f1.getDate()+"<br/>&nbsp;"+patron.referencia[i_array]+"</div>");
+		else
+			$("#dia_"+i).html("<div class='otromes'>"+f1.getDate()+"<br/>&nbsp;"+patron.referencia[i_array]+"</div>");
 		f1.setDate(f1.getDate()+1);
+		i_array = mod(i_array+1, patron.referencia.length);
 	}
 	
 }
@@ -125,7 +158,7 @@ $( function(){
 <div data-role="page" id="page1">
         <div data-theme="a" data-role="header">
             <h3>
-                Header
+                Ana
             </h3>
             <a data-role="button" href="#page1" data-icon="bars" data-iconpos="left">
                 |
