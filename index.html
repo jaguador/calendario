@@ -4,6 +4,7 @@
 <!-- <html lang="es" manifest="cache.manifest" xmlns="http://www.w3.org/1999/xhtml"> -->
 <head>
   <title>Calendario de turnos</title>
+  <link rel="apple-touch-startup-image" href="images/splash.png" />
 	<meta charset="iso-8859-1">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -11,9 +12,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="apple-touch-icon" href="images/icon-calendario.png" />
-	<link rel="stylesheet" href="jquery.mobile-1.3.2.min.css">
+	<link rel="stylesheet" href="jquery.mobile-1.4.0.min.css">
 	<script src="jquery-1.9.1.min.js"></script>
-	<script src="jquery.mobile-1.3.2.min.js"></script>
+	<script src="jquery.mobile-1.4.0.min.js"></script>
   <style>
  /* ADD 6(e) and 7(f) column grid */
 .ui-grid-e, .ui-grid-f { overflow: hidden; }
@@ -44,6 +45,73 @@
 
 .ui-panel-content-wrap {min-height: 0;}
 
+/****************** SWIPE *********************/
+.ui-btn-up-e {
+    border: 1px solid #696969 /*{e-bup-border}*/;
+    background: #d23232 /*{e-bup-background-color}*/;
+    font-weight: bold;
+    color: #ffffff /*{e-bup-color}*/;
+    text-shadow:  0  /*{e-bup-shadow-x}*/  1px  /*{e-bup-shadow-y}*/  1px  /*{e-bup-shadow-radius}*/ #4f4f4f /*{e-bup-shadow-color}*/;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #FF3E3E /*{e-bup-background-start}*/), to( #9D2525 /*{e-bup-background-end}*/)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #FF3E3E /*{e-bup-background-start}*/, #9D2525 /*{e-bup-background-end}*/); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient( #FF3E3E /*{e-bup-background-start}*/, #9D2525 /*{e-bup-background-end}*/); /* FF3.6 */
+    background-image:     -ms-linear-gradient( #FF3E3E /*{e-bup-background-start}*/, #9D2525 /*{e-bup-background-end}*/); /* IE10 */
+    background-image:      -o-linear-gradient( #FF3E3E /*{e-bup-background-start}*/, #9D2525 /*{e-bup-background-end}*/); /* Opera 11.10+ */
+    background-image:         linear-gradient( #FF3E3E /*{e-bup-background-start}*/, #9D2525 /*{e-bup-background-end}*/);
+}
+.ui-btn-up-e a.ui-link-inherit {
+    color: #ffffff /*{e-bup-color}*/;
+}
+
+.ui-btn-hover-e {
+    border: 1px solid #696969 /*{e-bhover-border}*/;
+    background: #b81414 /*{e-bhover-background-color}*/;
+    font-weight: bold;
+    color: #ffffff /*{e-bhover-color}*/;
+    text-shadow:  0  /*{e-bhover-shadow-x}*/  1px  /*{e-bhover-shadow-y}*/  1px  /*{e-bhover-shadow-radius}*/ #4f4f4f /*{e-bhover-shadow-color}*/;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #EF1A1A /*{e-bhover-background-start}*/), to( #800E0E /*{e-bhover-background-end}*/)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #EF1A1A /*{e-bhover-background-start}*/, #800E0E /*{e-bhover-background-end}*/); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient( #EF1A1A /*{e-bhover-background-start}*/, #800E0E /*{e-bhover-background-end}*/); /* FF3.6 */
+    background-image:     -ms-linear-gradient( #EF1A1A /*{e-bhover-background-start}*/, #800E0E /*{e-bhover-background-end}*/); /* IE10 */
+    background-image:      -o-linear-gradient( #EF1A1A /*{e-bhover-background-start}*/, #800E0E /*{e-bhover-background-end}*/); /* Opera 11.10+ */
+    background-image:         linear-gradient( #EF1A1A /*{e-bhover-background-start}*/, #800E0E /*{e-bhover-background-end}*/);
+}
+.ui-btn-hover-e a.ui-link-inherit {
+    color: #ffffff /*{e-bhover-color}*/;
+}
+.ui-btn-down-e {
+    border: 1px solid #696969 /*{e-bdown-border}*/;
+    background: #b81414 /*{e-bdown-background-color}*/;
+    font-weight: bold;
+    color: #ffffff /*{e-bdown-color}*/;
+    text-shadow:  0  /*{e-bdown-shadow-x}*/  1px  /*{e-bdown-shadow-y}*/  1px  /*{e-bdown-shadow-radius}*/ #4f4f4f /*{e-bdown-shadow-color}*/;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #880E0E /*{e-bdown-background-start}*/), to( #E71919 /*{e-bdown-background-end}*/)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #880E0E /*{e-bdown-background-start}*/, #E71919 /*{e-bdown-background-end}*/); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient( #880E0E /*{e-bdown-background-start}*/, #E71919 /*{e-bdown-background-end}*/); /* FF3.6 */
+    background-image:     -ms-linear-gradient( #880E0E /*{e-bdown-background-start}*/, #E71919 /*{e-bdown-background-end}*/); /* IE10 */
+    background-image:      -o-linear-gradient( #880E0E /*{e-bdown-background-start}*/, #E71919 /*{e-bdown-background-end}*/); /* Opera 11.10+ */
+    background-image:         linear-gradient( #880E0E /*{e-bdown-background-start}*/, #E71919 /*{e-bdown-background-end}*/);
+}
+.ui-btn-down-e a.ui-link-inherit {
+    color: #ffffff /*{e-bdown-color}*/;
+}
+.ui-btn-up-e,
+.ui-btn-hover-e,
+.ui-btn-down-e {
+          font-family: Helvetica, Arial, sans-serif  /*{global-font-family}*/;
+    text-decoration: none;
+}
+
+.delete-controls button {
+    height: 2.5em;
+    width: 8em;    
+}
+
+.delete-controls {
+    text-align: right;
+}
+/***************************************************/
+
 
 div .borde{ border: 1px solid black; text-align: center}
 div .diasemana{ font-weight:bold; border: 1px solid black; text-align: center; background-color: lightSteelBlue;}
@@ -53,16 +121,24 @@ div .diames{font-weight:bold;  border: 1px solid black; text-align: center; }
 div .diamesfs{font-weight:bold;  border: 1px solid black; text-align: center; background-color: lightgray;}
 div .diamesturno{font-weight:bold;  border: 1px solid black; text-align: center; color: tomato;}
 div .diamesfsturno{font-weight:bold;  border: 1px solid black; text-align: center; background-color: lightgray; color: tomato;}
+ .nombre{font-weight:bold;  text-align: center; color: tomato !important;}
   </style>
 </head>
 <body >
  
 <script>
 var mesesESP = new Array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
-var anio = 2013;
-var mes = 11;
-var calActivo = "Ana";
+var anio, mes;
+var calActivo = "";
+var nuevoPatron = {nombre : null, diainicio : null, referencia : null};
+
 var patrones = new Array(); 
+patrones[""] = {};
+patrones[""].nombre = "No definido"; 
+patrones[""].diainicio = new Date(2013, 11, 14);
+patrones[""].referencia = new Array(" ");  
+
+/*
 patrones["Ana"] = {};
 patrones["Ana"].nombre = "Ana"; 
 patrones["Ana"].diainicio = new Date(2013, 11, 14);
@@ -72,12 +148,13 @@ patrones["Rosa"] = {};
 patrones["Rosa"].nombre = "Rosa"; 
 patrones["Rosa"].diainicio = new Date(2013, 11, 14);
 patrones["Rosa"].referencia = new Array("T", "T", "M", "M", "X", " ", " ", " "); 
+*/
 
 /*
-localStorage.calendarios = JSON.stringify(patron);  
+localStorage.patrones = JSON.stringify(patron);  
 // LOCAL STORAGE 
 if (localStorage.calendarios) {
-    var modeloPersistente = JSON.parse(localStorage.calendarios);
+    var patrones = JSON.parse(localStorage.patrones);
     // ...
 }  
 */  
@@ -93,6 +170,7 @@ function diffDias(date1, date2) {
 }
 
 function cambiaMes(incremento) {
+	$('#lblNombre').html(patrones[calActivo].nombre);
 	mes += incremento;
 	if (mes == 12) {
 		anio++;
@@ -137,7 +215,15 @@ function cambiaMes(incremento) {
 			break;
 		}
 	}
+	var estilo;
+	if (indice < 36) 
+		estilo ="hidden";
+	else
+		estilo ="";
+	
 	for (var i=indice+1; i<=42; i++) {
+		if (i > 36) 
+			$("#dia_"+i).css("visibility", estilo);
 		if (f1.getDay() == 6 || f1.getDay() == 0)
 			$("#dia_"+i).html("<div class='otromesfs'>"+f1.getDate()+"<br/>&nbsp;"+patrones[calActivo].referencia[i_array]+"</div>");
 		else
@@ -146,6 +232,65 @@ function cambiaMes(incremento) {
 		i_array = mod(i_array+1, patrones[calActivo].referencia.length);
 	}
 	
+	
+}
+
+
+function addNuevoCalendario() {
+	patrones[nuevoPatron.nombre] = nuevoPatron;
+	$('#dividerCalendarios').before('<li><a href="#" class="cal ui-btn" id="cal_'+nuevoPatron.nombre+'">'+nuevoPatron.nombre+'</a></li>');
+	calActivo = nuevoPatron.nombre;
+	$('#lblNombre').html(patrones[calActivo].nombre);
+	$(".cal").on( "swiperight", accionSwipe );
+	cambiaMes(0);
+}
+
+function delCalendario(id) {
+	if (calActivo == id) {
+		calActivo = "";
+		cambiaMes(0);
+	}
+	delete patrones[id];
+}
+
+function accionSwipe(e) { 
+	  var onswipe = false;
+	var objeto = $("#cal_"+e.target.id.split('_')[1]);
+	var idcal = objeto[0].id.split('_')[1];
+	if(!onswipe){
+        onswipe = true;
+        
+        var li;    
+        var html = '<li class="delete-controls"><button type="button" class="btncancel ui-btn-corner-all ui-btn-up-c" data-role="button" data-theme="c">Cancelar</button>&nbsp;<button type="button" class="btndelete ui-btn-corner-all ui-btn-up-e" data-role="button" data-theme="e">Borrar</button></li>';
+        objeto.after(html);
+        li = objeto.detach();    
+        $("ul[id='swipedelete']").listview("refresh");
+        
+        $(".delete-controls").unbind("tap click");
+        $(".delete-controls .btndelete").click(function(e){
+            //alert("Click on delete");
+            if(!confirm("¿Seguro que desea eliminar este calendario?")){        
+                $(".delete-controls").before(li);
+                $(".delete-controls").remove();
+            } else{
+                $(".delete-controls").remove();
+				delCalendario(idcal);
+            }
+            
+            onswipe = false;
+            $("ul[id='swipedelete']").listview("refresh");
+        });
+        
+        $(".delete-controls .btncancel").click(function(e){
+            //alert("Click on cancel");
+            $(".delete-controls").before(li);
+            $(".delete-controls").remove();
+            
+            onswipe = false;
+            $("ul[id='swipedelete']").listview("refresh");
+        });        
+        
+    }
 }
 
 $(document).ready(function() {
@@ -166,11 +311,14 @@ $( function(){
 
   $( ".cal" ).on( "vclick", function(){
 	calActivo = $(this)[0].id.split('_')[1];
-	$('#lblNombre').html(patrones[calActivo].nombre);
 	cambiaMes(0);
 	$('#right-panel' ).panel( "close" );
   });
   
+  //$(".cal").swiperight( accionSwipe($(this)) );
+  $(".cal").on( "swiperight", accionSwipe );
+ // $(".cal").each( accionSwipe($(this)) );
+    
 }); 
 
 
@@ -184,19 +332,43 @@ $( function(){
  	<div data-role="panel" id="right-panel" data-display="overlay" data-position="left" data-theme="a">
         <ul data-role="listview" data-theme="a" data-icon="false">
             <li data-icon="delete"><a href="#" data-rel="close">Cerrar</a></li>
-            <li data-role="list-divider">Calendarios</li>
-            <li><a href="#" class="cal" id="cal_Ana">Ana</a></li>
-            <li><a href="#" class="cal" id="cal_Rosa">Rosa</a></li>
-            <li data-role="list-divider">Configuracion</li>
-            <li data-icon="plus" ><a href="#dialogo" data-rel="dialog">Nuevo ...</a></li>
-        </ul>
+            <li data-role="list-divider" id="liCalendarios">Calendarios</li>
+            <!-- <li><a href="#" class="cal" id="cal_Ana">Ana</a></li>
+            <li><a href="#" class="cal" id="cal_Rosa">Rosa</a></li> -->
+            <li data-role="list-divider" id="dividerCalendarios">Configuracion</li>
+            <li data-icon="plus" ><a id="btnNuevo" href="#dialogo" data-rel="dialog" >Nuevo ...</a></li>
+ 			<script>
+			$( "#btnNuevo" ).on( "vclick", function(){
+				nuevoPatron.nombre = null;
+				nuevoPatron.diainicio = null;
+				nuevoPatron.referencia = null;
+				$('#inputNombre').val("");
+			  });
+			 </script>	
+			 </ul>
     </div><!-- /panel -->
 
 		
         <div data-theme="a" data-role="header">
-			<h3 id="lblNombre"></h3>
+			<h3 id="lblNombre" class="nombre"></h3>
 			<a href="#right-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-theme="a" >Menu</a>
         </div>
+
+
+    <div data-theme="a" data-role="header">
+        <a data-role="button" href="#demopage" class="ui-btn-right" id="btnSiguiente" data-shadow="false" data-iconshadow="false" data-theme="a" >
+            &gt;
+        </a>
+        <a data-role="button" href="#demopage" class="ui-btn-left"  id="btnAnterior" data-shadow="false" data-iconshadow="false" data-theme="a" >
+            &lt;
+        </a>
+        <h3 id='lblMesAnio'>
+            Mes
+        </h3>
+    </div>
+ 
+ 
+ 		
 <div data-role=”content”>		
 <div class="ui-grid-f">
   <div class="ui-block-a"><div class="diasemana">L</div></div>
@@ -265,35 +437,45 @@ $( function(){
  
  
 
-
-    <div data-theme="a" data-role="footer">
-        <a data-role="button" href="#demopage" class="ui-btn-right" id="btnSiguiente" data-shadow="false" data-iconshadow="false" data-theme="a" >
-            &gt;
-        </a>
-        <a data-role="button" href="#demopage" class="ui-btn-left"  id="btnAnterior" data-shadow="false" data-iconshadow="false" data-theme="a" >
-            &lt;
-        </a>
-        <h3 id='lblMesAnio'>
-            Mes
-        </h3>
-    </div>
- 
- 
- 
 </div>
  
  <div data-role="page" id="dialogo">
+		<div data-role="popup" id="popupNombre">¡Debe indicar un nombre para el calendario!</div>
 		<div data-role="header" data-theme="d">
 			<h1>Nuevo calendario</h1>
 		</div>
 		<div data-role="content" data-theme="c">
 			<h1>Nombre del Calendario</h1>
 			<input type="text" id="inputNombre"></input>
-			<a href="#dialogo2" data-role="button" data-rel="dialog" data-theme="b">Continuar</a>       
-			<a href="page-dialogs.html" data-role="button" data-rel="back" data-theme="a">Cancelar</a>    
+			<a id="btnContinuarNombre" href="#dialogo2" data-role="button" data-rel="dialog" data-theme="b" >Continuar</a>       
+			<a id="btnCancelarNombre" href="#" data-role="button" data-rel="back" data-theme="a" >Cancelar</a>  
+			<script>
+			$( "#btnContinuarNombre" ).on( "vclick", function(e){
+				// Tomar nombre
+				nuevoPatron.nombre = $('#inputNombre').val();
+				if (nuevoPatron.nombre == "") {
+					$("#popupNombre").popup( "option", "theme", "b" );
+					$("#popupNombre").popup( "open");
+					return false;
+				}
+				// Inicializa siguiente dialogo
+				$('#divTurnos').html("Turnos:");
+				$('#bDia').html("1");
+				delete nuevoPatron.referencia;
+			  });
+			  
+			$( "#btnCancelarNombre" ).on( "vclick", function(){
+				// Borrar todo
+				nuevoPatron.nombre = null;
+				nuevoPatron.diainicio = null;
+				nuevoPatron.referencia = null;
+				$('#inputNombre').val("")
+			  });
+			 </script>			
 		</div>
 </div>
  <div data-role="page" id="dialogo2">
+		<div data-role="popup" id="popupNombre2">¡Debe incluir al menos 1 turno!</div>
 		<div data-role="header" data-theme="d">
 			<h1>Nuevo calendario</h1>
 		</div>
@@ -308,15 +490,37 @@ $( function(){
 			<option value="X">Refuerzo</option>
 			<option value="M/X">Mañana/Refuerzo</option>
 			</select>
-			<a href="#" data-role="button" data-theme="c" id='btnAnadir'>Añadir</a>       
+			
+			<a href="#"  id='btnAnadirDias' data-role="button" data-theme="c">Añadir</a>       
+			<br/>	<hr/>
+			<a id='btnContinuarDias' href="#dialogo3" data-role="button" data-rel="dialog" data-theme="b">Continuar</a>       
+			<a href="#"  id='btnCancelarDias' data-role="button" data-rel="back" data-theme="a">Volver</a>    
 			<script>
-			$( "#btnAnadir" ).on( "vclick", function(){
+			$( "#btnAnadirDias" ).on( "vclick", function(){
+				// Añadir el turno al encabezado
 				$('#divTurnos').append($('#selectTurno').val()+',');
+				// Tomar turno en array
+				if (nuevoPatron.referencia == undefined) nuevoPatron.referencia = new Array();
+				nuevoPatron.referencia[nuevoPatron.referencia.length] = $('#selectTurno').val();
+				// Indicar siguiente dia
 				$('#bDia').html(parseInt($('#bDia').html())+1);
-			  });
-			 </script>
-			<a href="page-dialogs.html" data-role="button" data-rel="back" data-theme="b">Continuar</a>       
-			<a href="page-dialogs.html" data-role="button" data-rel="back" data-theme="a">Cancelar</a>    
+			});
+			  
+			$( "#btnContinuarDias" ).on( "vclick", function(){
+				if (nuevoPatron.referencia == undefined) {
+					$("#popupNombre2").popup( "option", "theme", "b" );
+					$("#popupNombre2").popup( "open");
+					return false;				
+				}
+				$('#dateReferencia').val("");
+			});
+			  
+			$( "#btnCancelarDias" ).on( "vclick", function(){
+				$('#inputNombre').val("");
+				delete nuevoPatron.referencia;
+				nuevoPatron.nombre = null;
+			});			  
+			 </script>		
 		</div>
 </div> 
   <div data-role="page" id="dialogo3">
@@ -325,24 +529,24 @@ $( function(){
 		</div>
 		<div data-role="content" data-theme="c">
 			<h3 id='divTurnos'>Dia de inicio:</h3>
-			<p id='pDia'>Dia <b id='bDia'>1</b></p> <select id="selectTurno">
-			<option value=" ">Descanso</option>
-			<option value="M">Mañana</option>
-			<option value="T">Tarde</option>
-			<option value="N">Noche</option>
-			<option value="M/N">Mañana/Noche</option>
-			<option value="X">Refuerzo</option>
-			<option value="M/X">Mañana/Refuerzo</option>
-			</select>
-			<a href="#" data-role="button" data-theme="c" id='btnAnadir'>Añadir</a>       
+			<label for="date-1">Primer dia del periodo</label>
+			<input type="date" data-clear-btn="false" name="date-1" id="diaInicio" value="">
+			<a href="#demopage" id='btnFinalizar' data-role="button"  data-theme="b">Finalizar</a>       
+			<a href="#"  id='btnCancelarFecha' data-role="button" data-rel="back" data-theme="a">Volver</a>    
 			<script>
-			$( "#btnAnadir" ).on( "vclick", function(){
+			$( "#btnFinalizar" ).on( "vclick", function(){
 				$('#divTurnos').append($('#selectTurno').val()+',');
 				$('#bDia').html(parseInt($('#bDia').html())+1);
-			  });
+				var f = $('#diaInicio').val().split('-');
+				
+				nuevoPatron.diainicio = new Date(parseInt(f[0]), parseInt(f[1])-1, parseInt(f[2]));
+				addNuevoCalendario();
+			});
+			$( "#btnCancelarFecha" ).on( "vclick", function(){
+				$('#diaInicio').val("");
+				nuevoPatron.diainicio = null;
+			});	
 			 </script>
-			<a href="page-dialogs.html" data-role="button" data-rel="back" data-theme="b">Continuar</a>       
-			<a href="page-dialogs.html" data-role="button" data-rel="back" data-theme="a">Cancelar</a>    
 		</div>
 </div> 
 </body>
