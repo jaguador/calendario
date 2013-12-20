@@ -1,9 +1,10 @@
-<!doctype html>
-<html lang="es" manifest="cache.manifest">
-<!-- <html>  -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- <html lang="es" manifest="cache.manifest" xmlns="http://www.w3.org/1999/xhtml"> -->
 <head>
   <title>Calendario de turnos</title>
-	<meta charset="utf-8">
+	<meta charset="iso-8859-1">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -41,6 +42,8 @@
 .ui-header .ui-navbar .ui-grid-e li.ui-block-f .ui-btn-icon-right .ui-icon,
 .ui-footer .ui-navbar .ui-grid-f li.ui-block-g .ui-btn-icon-right .ui-icon { right: 8px; }
 
+.ui-panel-content-wrap {min-height: 0;}
+
 
 div .borde{ border: 1px solid black; text-align: center}
 div .diasemana{ font-weight:bold; border: 1px solid black; text-align: center; background-color: lightSteelBlue;}
@@ -52,16 +55,23 @@ div .diamesturno{font-weight:bold;  border: 1px solid black; text-align: center;
 div .diamesfsturno{font-weight:bold;  border: 1px solid black; text-align: center; background-color: lightgray; color: tomato;}
   </style>
 </head>
-<body>
+<body >
  
 <script>
 var mesesESP = new Array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
 var anio = 2013;
 var mes = 11;
-var patron = {}; 
-patron.nombre = "Atestados"; 
-patron.diainicio = new Date(2013, 11, 14);
-patron.referencia = new Array("T", "M/N", " ", " ", " ");  
+var calActivo = "Ana";
+var patrones = new Array(); 
+patrones["Ana"] = {};
+patrones["Ana"].nombre = "Ana"; 
+patrones["Ana"].diainicio = new Date(2013, 11, 14);
+patrones["Ana"].referencia = new Array("T", "M/N", " ", " ", " ");  
+
+patrones["Rosa"] = {};
+patrones["Rosa"].nombre = "Rosa"; 
+patrones["Rosa"].diainicio = new Date(2013, 11, 14);
+patrones["Rosa"].referencia = new Array("T", "T", "M", "M", "X", " ", " ", " "); 
 
 /*
 localStorage.calendarios = JSON.stringify(patron);  
@@ -99,29 +109,29 @@ function cambiaMes(incremento) {
 	var indice;
 	faux.setDate(faux.getDate()-diasemana);
 	// Posicionarnos en el primer dia del mes
-	var i_array = mod(diffDias(patron.diainicio, faux), patron.referencia.length);
+	var i_array = mod(diffDias(patrones[calActivo].diainicio, faux), patrones[calActivo].referencia.length);
 	for (var i=1; i<=diasemana; i++) {		
 		if (faux.getDay() == 6 || faux.getDay() == 0)
-			$("#dia_"+i).html("<div class='otromesfs'>"+faux.getDate()+"<br/>&nbsp;"+patron.referencia[i_array]+"</div>");
+			$("#dia_"+i).html("<div class='otromesfs'>"+faux.getDate()+"<br/>&nbsp;"+patrones[calActivo].referencia[i_array]+"</div>");
 		else
-			$("#dia_"+i).html("<div class='otromes'>"+faux.getDate()+"<br/>&nbsp;"+patron.referencia[i_array]+"</div>");
+			$("#dia_"+i).html("<div class='otromes'>"+faux.getDate()+"<br/>&nbsp;"+patrones[calActivo].referencia[i_array]+"</div>");
 		faux.setDate(faux.getDate()+1);
 		indice = i;
-		i_array = mod(i_array+1, patron.referencia.length);
+		i_array = mod(i_array+1, patrones[calActivo].referencia.length);
 	}
 	// Label de mes y año
-	i_array = mod(diffDias(patron.diainicio, f1), patron.referencia.length);
+	i_array = mod(diffDias(patrones[calActivo].diainicio, f1), patrones[calActivo].referencia.length);
 	$('#lblMesAnio').html(mesesESP[f1.getMonth()]+' '+f1.getFullYear());
 	var mesaux = mes;
 	for (var i=indice+1; i<=42; i++) {
 		var turnotxt = "diames";
 		if (f1.getDay() == 6 || f1.getDay() == 0)
 			turnotxt += "fs";
-		if (patron.referencia[i_array] != " ")
+		if (patrones[calActivo].referencia[i_array] != " ")
 			turnotxt += "turno";
-		$("#dia_"+i).html("<div class='"+turnotxt+"'>"+f1.getDate()+"<br/>&nbsp;"+patron.referencia[i_array]+"</div>");
+		$("#dia_"+i).html("<div class='"+turnotxt+"'>"+f1.getDate()+"<br/>&nbsp;"+patrones[calActivo].referencia[i_array]+"</div>");
 		f1.setDate(f1.getDate()+1);
-		i_array = mod(i_array+1, patron.referencia.length);
+		i_array = mod(i_array+1, patrones[calActivo].referencia.length);
 		if (f1.getMonth() != mesaux) {
 			indice = i;
 			break;
@@ -129,11 +139,11 @@ function cambiaMes(incremento) {
 	}
 	for (var i=indice+1; i<=42; i++) {
 		if (f1.getDay() == 6 || f1.getDay() == 0)
-			$("#dia_"+i).html("<div class='otromesfs'>"+f1.getDate()+"<br/>&nbsp;"+patron.referencia[i_array]+"</div>");
+			$("#dia_"+i).html("<div class='otromesfs'>"+f1.getDate()+"<br/>&nbsp;"+patrones[calActivo].referencia[i_array]+"</div>");
 		else
-			$("#dia_"+i).html("<div class='otromes'>"+f1.getDate()+"<br/>&nbsp;"+patron.referencia[i_array]+"</div>");
+			$("#dia_"+i).html("<div class='otromes'>"+f1.getDate()+"<br/>&nbsp;"+patrones[calActivo].referencia[i_array]+"</div>");
 		f1.setDate(f1.getDate()+1);
-		i_array = mod(i_array+1, patron.referencia.length);
+		i_array = mod(i_array+1, patrones[calActivo].referencia.length);
 	}
 	
 }
@@ -142,6 +152,7 @@ $(document).ready(function() {
       var hoy = new Date();
 	  anio = hoy.getFullYear();
 	  mes = hoy.getMonth();
+	  $('#lblNombre').html(patrones[calActivo].nombre);
 	  cambiaMes(0);
 });
 
@@ -152,29 +163,41 @@ $( function(){
   $( "#btnSiguiente" ).on( "vclick", function(){
 	cambiaMes(1);
   });
+
+  $( ".cal" ).on( "vclick", function(){
+	calActivo = $(this)[0].id.split('_')[1];
+	$('#lblNombre').html(patrones[calActivo].nombre);
+	cambiaMes(0);
+	$('#right-panel' ).panel( "close" );
+  });
+  
 }); 
+
+
+
 </script>  
  
-<div data-role="page" id="page1">
+ 
+<div data-role="page" id="demopage">
+
+
+ 	<div data-role="panel" id="right-panel" data-display="overlay" data-position="left" data-theme="a">
+        <ul data-role="listview" data-theme="a" data-icon="false">
+            <li data-icon="delete"><a href="#" data-rel="close">Cerrar</a></li>
+            <li data-role="list-divider">Calendarios</li>
+            <li><a href="#" class="cal" id="cal_Ana">Ana</a></li>
+            <li><a href="#" class="cal" id="cal_Rosa">Rosa</a></li>
+            <li data-role="list-divider">Configuracion</li>
+            <li data-icon="plus" ><a href="#dialogo" data-rel="dialog">Nuevo ...</a></li>
+        </ul>
+    </div><!-- /panel -->
+
+		
         <div data-theme="a" data-role="header">
-            <h3>
-                Ana
-            </h3>
-            <a data-role="button" href="#page1" data-icon="bars" data-iconpos="left">
-                |
-            </a>
+			<h3 id="lblNombre"></h3>
+			<a href="#right-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-theme="a" >Menu</a>
         </div>
-    <div data-theme="a" data-role="header">
-        <a data-role="button" href="#page1" class="ui-btn-right" id="btnSiguiente">
-            &gt;
-        </a>
-        <a data-role="button" href="#page1" class="ui-btn-left"  id="btnAnterior">
-            &lt;
-        </a>
-        <h3 id='lblMesAnio'>
-            Mes
-        </h3>
-    </div>
+<div data-role=”content”>		
 <div class="ui-grid-f">
   <div class="ui-block-a"><div class="diasemana">L</div></div>
   <div class="ui-block-b"><div class="diasemana">M</div></div>
@@ -238,11 +261,89 @@ $( function(){
   <div class="ui-block-f" id="dia_41"></div>
   <div class="ui-block-g" id="dia_42"></div>
 </div>
-  </div>
+</div>
+ 
+ 
+
+
+    <div data-theme="a" data-role="footer">
+        <a data-role="button" href="#demopage" class="ui-btn-right" id="btnSiguiente" data-shadow="false" data-iconshadow="false" data-theme="a" >
+            &gt;
+        </a>
+        <a data-role="button" href="#demopage" class="ui-btn-left"  id="btnAnterior" data-shadow="false" data-iconshadow="false" data-theme="a" >
+            &lt;
+        </a>
+        <h3 id='lblMesAnio'>
+            Mes
+        </h3>
     </div>
+ 
  
  
 </div>
  
+ <div data-role="page" id="dialogo">
+		<div data-role="header" data-theme="d">
+			<h1>Nuevo calendario</h1>
+		</div>
+		<div data-role="content" data-theme="c">
+			<h1>Nombre del Calendario</h1>
+			<input type="text" id="inputNombre"></input>
+			<a href="#dialogo2" data-role="button" data-rel="dialog" data-theme="b">Continuar</a>       
+			<a href="page-dialogs.html" data-role="button" data-rel="back" data-theme="a">Cancelar</a>    
+		</div>
+</div>
+ <div data-role="page" id="dialogo2">
+		<div data-role="header" data-theme="d">
+			<h1>Nuevo calendario</h1>
+		</div>
+		<div data-role="content" data-theme="c">
+			<h3 id='divTurnos'>Turnos:</h3>
+			<p id='pDia'>Dia <b id='bDia'>1</b></p> <select id="selectTurno">
+			<option value=" ">Descanso</option>
+			<option value="M">Mañana</option>
+			<option value="T">Tarde</option>
+			<option value="N">Noche</option>
+			<option value="M/N">Mañana/Noche</option>
+			<option value="X">Refuerzo</option>
+			<option value="M/X">Mañana/Refuerzo</option>
+			</select>
+			<a href="#" data-role="button" data-theme="c" id='btnAnadir'>Añadir</a>       
+			<script>
+			$( "#btnAnadir" ).on( "vclick", function(){
+				$('#divTurnos').append($('#selectTurno').val()+',');
+				$('#bDia').html(parseInt($('#bDia').html())+1);
+			  });
+			 </script>
+			<a href="page-dialogs.html" data-role="button" data-rel="back" data-theme="b">Continuar</a>       
+			<a href="page-dialogs.html" data-role="button" data-rel="back" data-theme="a">Cancelar</a>    
+		</div>
+</div> 
+  <div data-role="page" id="dialogo3">
+		<div data-role="header" data-theme="d">
+			<h1>Nuevo calendario</h1>
+		</div>
+		<div data-role="content" data-theme="c">
+			<h3 id='divTurnos'>Dia de inicio:</h3>
+			<p id='pDia'>Dia <b id='bDia'>1</b></p> <select id="selectTurno">
+			<option value=" ">Descanso</option>
+			<option value="M">Mañana</option>
+			<option value="T">Tarde</option>
+			<option value="N">Noche</option>
+			<option value="M/N">Mañana/Noche</option>
+			<option value="X">Refuerzo</option>
+			<option value="M/X">Mañana/Refuerzo</option>
+			</select>
+			<a href="#" data-role="button" data-theme="c" id='btnAnadir'>Añadir</a>       
+			<script>
+			$( "#btnAnadir" ).on( "vclick", function(){
+				$('#divTurnos').append($('#selectTurno').val()+',');
+				$('#bDia').html(parseInt($('#bDia').html())+1);
+			  });
+			 </script>
+			<a href="page-dialogs.html" data-role="button" data-rel="back" data-theme="b">Continuar</a>       
+			<a href="page-dialogs.html" data-role="button" data-rel="back" data-theme="a">Cancelar</a>    
+		</div>
+</div> 
 </body>
 </html>
