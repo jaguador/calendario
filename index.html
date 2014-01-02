@@ -188,6 +188,7 @@ function cambiaMes(incremento) {
 	faux.setDate(faux.getDate()-diasemana);
 	// Posicionarnos en el primer dia del mes
 	var i_array = mod(diffDias(patrones[calActivo].diainicio, faux), patrones[calActivo].referencia.length);
+	indice = 0;
 	for (var i=1; i<=diasemana; i++) {		
 		if (faux.getDay() == 6 || faux.getDay() == 0)
 			$("#dia_"+i).html("<div class='otromesfs'>"+faux.getDate()+"<br/>&nbsp;"+patrones[calActivo].referencia[i_array]+"</div>");
@@ -197,7 +198,7 @@ function cambiaMes(incremento) {
 		indice = i;
 		i_array = mod(i_array+1, patrones[calActivo].referencia.length);
 	}
-	// Label de mes y año
+	// Label de mes y aï¿½o
 	i_array = mod(diffDias(patrones[calActivo].diainicio, f1), patrones[calActivo].referencia.length);
 	$('#lblMesAnio').html(mesesESP[f1.getMonth()]+' '+f1.getFullYear());
 	var mesaux = mes;
@@ -269,7 +270,7 @@ function accionSwipe(e) {
         $(".delete-controls").unbind("tap click");
         $(".delete-controls .btndelete").click(function(e){
             //alert("Click on delete");
-            if(!confirm("¿Seguro que desea eliminar este calendario?")){        
+            if(!confirm("ï¿½Seguro que desea eliminar este calendario?")){        
                 $(".delete-controls").before(li);
                 $(".delete-controls").remove();
             } else{
@@ -369,7 +370,7 @@ $( function(){
  
  
  		
-<div data-role=”content”>		
+<div data-role=ï¿½contentï¿½>		
 <div class="ui-grid-f">
   <div class="ui-block-a"><div class="diasemana">L</div></div>
   <div class="ui-block-b"><div class="diasemana">M</div></div>
@@ -440,7 +441,7 @@ $( function(){
 </div>
  
  <div data-role="page" id="dialogo">
-		<div data-role="popup" id="popupNombre">¡Debe indicar un nombre para el calendario!</div>
+		<div data-role="popup" id="popupNombre">ï¿½Debe indicar un nombre para el calendario!</div>
 		<div data-role="header" data-theme="d">
 			<h1>Nuevo calendario</h1>
 		</div>
@@ -475,7 +476,7 @@ $( function(){
 		</div>
 </div>
  <div data-role="page" id="dialogo2">
-		<div data-role="popup" id="popupNombre2">¡Debe incluir al menos 1 turno!</div>
+		<div data-role="popup" id="popupNombre2">ï¿½Debe incluir al menos 1 turno!</div>
 		<div data-role="header" data-theme="d">
 			<h1>Nuevo calendario</h1>
 		</div>
@@ -483,21 +484,21 @@ $( function(){
 			<h3 id='divTurnos'>Turnos:</h3>
 			<p id='pDia'>Dia <b id='bDia'>1</b></p> <select id="selectTurno">
 			<option value=" ">Descanso</option>
-			<option value="M">Mañana</option>
+			<option value="M">Maï¿½ana</option>
 			<option value="T">Tarde</option>
 			<option value="N">Noche</option>
-			<option value="M/N">Mañana/Noche</option>
+			<option value="M/N">Maï¿½ana/Noche</option>
 			<option value="X">Refuerzo</option>
-			<option value="M/X">Mañana/Refuerzo</option>
+			<option value="M/X">Maï¿½ana/Refuerzo</option>
 			</select>
 			
-			<a href="#"  id='btnAnadirDias' data-role="button" data-theme="c">Añadir</a>       
+			<a href="#"  id='btnAnadirDias' data-role="button" data-theme="c">Aï¿½adir</a>       
 			<br/>	<hr/>
 			<a id='btnContinuarDias' href="#dialogo3" data-role="button" data-rel="dialog" data-theme="b">Continuar</a>       
 			<a href="#"  id='btnCancelarDias' data-role="button" data-rel="back" data-theme="a">Volver</a>    
 			<script>
 			$( "#btnAnadirDias" ).on( "vclick", function(){
-				// Añadir el turno al encabezado
+				// Aï¿½adir el turno al encabezado
 				$('#divTurnos').append($('#selectTurno').val()+',');
 				// Tomar turno en array
 				if (nuevoPatron.referencia == undefined) nuevoPatron.referencia = new Array();
